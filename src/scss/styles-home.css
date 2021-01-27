@@ -1,0 +1,14 @@
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  
+}
+
+main > ul {
+    list-style-type: none;
+    display:flex;
+    padding: 0;
+}
+main > ul > li {
+    padding: 20px 10px;
+    background-color: aquamarine;
+}
