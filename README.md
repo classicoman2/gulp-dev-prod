@@ -38,12 +38,6 @@ npm run watch
 ```bash
 npm run build
 ```
-
-### Crear live server que compila el SCSS en fer canvis
-```bash
-npm run watch
-```
-
  
 ## Webgraphy
 
