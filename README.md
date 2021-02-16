@@ -17,17 +17,12 @@ npm run watch
 
 ## 2. Generar versió producció
 - 1: Crea un directori `dist`. Si ja existeix, borra el seu contingut. 
-- 2: Copia el codi HTML de `src` a `dist`
-- 3: Minifica el codi dins de `src/js` a dins de `dist/js`
-- 4: Minifica el codi CSS de `src/css` a dins de `dist/css`
-- 5: Optimitza les imatges de `src/images` a dins de `dist/images`
+- 2: Crea una versió optimitzada de HTML a dins de `dist` amb [htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
+- 3: Crea un sol fitxer _bundle_ de codi javascript a dins de `dist/js` amb [browserify](https://www.npmjs.com/package/browserify)
+- 4: Minifica el codi CSS de `src/css` a dins de `dist/css` amb [postcss](https://www.npmjs.com/package/postcss)
+- 5: Minimitza les imatges de `src/images` amb el package [imagemin](https://web.dev/use-imagemin-to-compress-images/) i les guarda a dins de `dist/images`
 
 > Alerta amb els subdirectoris dels fitxers, si no estan ben indicats, fallarà l'execució de `Gulp`
-
-### Usage
-```bash
-npm run build
-```
 
 ## Com emprar-ho en el meu projecte? 
 
@@ -38,6 +33,17 @@ npm run build
  ```bash
  npm i 
  ```
+
+### Crear versió de producció
+```bash
+npm run build
+```
+
+### Crear live server que compila el SCSS en fer canvis
+```bash
+npm run watch
+```
+
  
 ## Webgraphy
 

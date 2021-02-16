@@ -18,7 +18,7 @@ const del = require("del");
 const sass = require("gulp-sass");
 const browserSync = require("browser-sync").create();
 
-// To prevent rewriting the source and build folder locations
+// Source and build directories
 const paths = {
   source: "./src",
   build: "./dist",
@@ -40,7 +40,7 @@ function javascriptBuild() {
   );
 }
 
-// Write our html task in a seperate function
+// Write our html task in a saperate function
 function htmlBuild() {
   return gulp
     .src(`${paths.source}/*.html`)
@@ -48,6 +48,7 @@ function htmlBuild() {
     .pipe(gulp.dest(paths.build));
 }
 
+// Processa el CSS
 function cssBuild() {
   return gulp
     .src(`${paths.source}/**/css/*.css`)
@@ -55,17 +56,17 @@ function cssBuild() {
     .pipe(gulp.dest(`${paths.build}`));
 }
 
-//xtoni - set paths
-
+// Comprimeix les imatges
 function imgSquash() {
-  return gulp.src(`${paths.source}/assets/images/*`)
-  .pipe(imagemin())
-  .pipe(gulp.dest(`${paths.build}/assets/images`));
+  return gulp
+    .src(`${paths.source}/assets/images/*`)
+    .pipe(imagemin())
+    .pipe(gulp.dest(`${paths.build}/assets/images`));
 }
 
+// Trasllada les fonts de directori
 function fontsToDist() {
-  return gulp.src(`${paths.source}/assets/fonts/*`)
-  .pipe(gulp.dest((`${paths.build}/assets/fonts/*`)) )
+  return gulp.src(`${paths.source}/assets/fonts/*`).pipe(gulp.dest(`${paths.build}/assets/fonts/*`));
 }
 
 function cleanup() {
@@ -82,8 +83,6 @@ function style() {
     .pipe(browserSync.stream());
 }
 
-
-
 // We have to change our exposed task, these functions can be ran in parallel as they do not depend on eachother.
 // If your functions should run synchronously use gulp.series()
 
@@ -94,13 +93,19 @@ function watch() {
       index: "/index.html",
     },
   });
-  gulp.watch("src/scss/**/*.scss", style);
+  gulp.watch("src/scss/*.scss", style);
   gulp.watch("src/*.html").on("change", browserSync.reload);
   gulp.watch("src/js/**/*.js").on("change", browserSync.reload);
   //gulp.watch("src/images/raw*", imgSquash);
 }
 
 // We have to run the cleanup task first, after which we can run the build tasks
-exports.build = gulp.series(cleanup, htmlBuild, imgSquash, fontsToDist, gulp.parallel(javascriptBuild, cssBuild, imgSquash));
+exports.build = gulp.series(
+  cleanup,
+  htmlBuild,
+  imgSquash,
+  fontsToDist,
+  gulp.parallel(javascriptBuild, cssBuild, imgSquash)
+);
 
 exports.watch = watch;
