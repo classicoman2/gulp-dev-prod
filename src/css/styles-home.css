@@ -8,7 +8,7 @@ main > ul {
   color: red; }
   main > ul > li {
     padding: 20px 10px;
-    background-color: green; }
+    background-color: grey; }
     main > ul > li a {
       color: white;
       font-size: 1.4rem; }

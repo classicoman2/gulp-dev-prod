@@ -66,7 +66,7 @@ function imgSquash() {
 
 // Trasllada les fonts de directori
 function fontsToDist() {
-  return gulp.src(`${paths.source}/assets/fonts/*`).pipe(gulp.dest(`${paths.build}/assets/fonts/*`));
+  return gulp.src(`${paths.source}/assets/fonts/*`).pipe(gulp.dest(`${paths.build}/assets/fonts`));
 }
 
 function cleanup() {
