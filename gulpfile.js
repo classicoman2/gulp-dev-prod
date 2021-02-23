@@ -24,14 +24,17 @@ const paths = {
   build: "./dist",
 };
 
-function javascriptBuild() {
+
+function javascriptBuildMain() {
+  let fileName = 'main.js'
+
   return (
     browserify({
-      entries: [`${paths.source}/js/main.js`],
+      entries: [`${paths.source}/js/${fileName}`],
       transform: [babelify.configure({ presets: ["@babel/preset-env"] })],
     })
       .bundle()
-      .pipe(source("js/main.js"))
+      .pipe(source(`js/${fileName}`))
       // Turn it into a buffer!
       .pipe(buffer())
       // And uglify
@@ -39,6 +42,28 @@ function javascriptBuild() {
       .pipe(gulp.dest(`${paths.build}`))
   );
 }
+
+function javascriptBuildSecondary() {
+  let fileName = 'anotherJsFile.js'
+  
+  return (
+    browserify({
+      entries: [`${paths.source}/js/${fileName}`],
+      transform: [babelify.configure({ presets: ["@babel/preset-env"] })],
+    })
+      .bundle()
+      .pipe(source(`js/${fileName}`))
+      // Turn it into a buffer!
+      .pipe(buffer())
+      // And uglify
+      .pipe(uglify())
+      .pipe(gulp.dest(`${paths.build}`))
+  );
+}
+
+/**
+ * En cas de que emprem més fitxers 
+ */
 
 // Write our html task in a saperate function
 function htmlBuild() {
@@ -105,7 +130,7 @@ exports.build = gulp.series(
   htmlBuild,
   imgSquash,
   fontsToDist,
-  gulp.parallel(javascriptBuild, cssBuild, imgSquash)
+  gulp.parallel(javascriptBuildMain, javascriptBuildSecondary, cssBuild, imgSquash)
 );
 
 exports.watch = watch;
