@@ -1,43 +1,50 @@
 # gulp-dev-prod
 
-Empram Gulp 4 per a:
-1. Establir un entorn de desenvolupament amb Compilador Sass/SCSS amb Theming Bootstrap i Live Server per visualitzar canvis instantàniament
-2. Generar versió de producció
+En aquest repositori veurem que podem emprar [GULP](https://gulpjs.com/) per a:
+1. Generar una VERSIÓ DE PRODUCCIÓ
+2. Establir un ENTORN DE DESENVOLUPAMENT amb Compilador Sass/SCSS, Theming Bootstrap i Live Server
 
-## 1. Entorn de Desenvolupament
+## Com emprar-ho en el meu projecte? 
 
-1. Sass/SCSS converter with **gulp-sass** package
-2. Live Server that reloades on changes in the *.html, *scss or *.js files using **browsersync**
-3. Bootstrap 4 with Theming easily integrated (change predefined vars., themes & load only the scss files you need). Needs:
+-  Copia el fitxer `gulpfile.js` a directori arrel
+- Crea `package.json` al teu projecte i afegeix les `dependencies` i les `devDependencies` del fitxer `package.json` d'aquest repo
 
-### Usage
+
+## 1. Generar versió producció
+### Com s'usa:
 ```bash
-npm run watch
+# instal·la dependències
+npm i
+# executa la tasca
+npm run build
 ```
 
-## 2. Generar versió producció
-- 1: Crea un directori `dist`. Si ja existeix, borra el seu contingut. 
+### Què fa
+- 1: Crea un directori `dist`
 - 2: Crea una versió optimitzada de HTML a dins de `dist` amb [htmlmin](https://www.npmjs.com/package/gulp-htmlmin)
 - 3: Crea un sol fitxer _bundle_ de codi javascript a dins de `dist/js` amb [browserify](https://www.npmjs.com/package/browserify)
 - 4: Minifica el codi CSS de `src/css` a dins de `dist/css` amb [postcss](https://www.npmjs.com/package/postcss)
 - 5: Minimitza les imatges de `src/images` amb el package [imagemin](https://web.dev/use-imagemin-to-compress-images/) i les guarda a dins de `dist/images`
 
-> Alerta amb els subdirectoris dels fitxers, si no estan ben indicats, fallarà l'execució de `Gulp`
+> Alerta amb els subdirectoris dels fitxers, si no estan ben indicats a `gulpfile.js`, fallarà l'execució de la tasca.
 
-## Com emprar-ho en el meu projecte? 
 
--  Copia el fitxer `gulpfile.js` a directori arrel
-- Crea `package.json` al teu projecte i afegeix les `dependencies` i les `devDependencies` al `package.json`
-- Executa:
 
- ```bash
- npm i 
- ```
+## 2. Desplegar un Entorn de Desenvolupament
 
-### Crear versió de producció
+### Com s'usa:
 ```bash
-npm run build
+# instal·la dependències
+npm i
+# executa la tasca
+npm run watch
 ```
+
+## Què fa
+1. Sass/SCSS converter with **gulp-sass** package
+2. Live Server that reloades on changes in the *.html, *scss or *.js files using **browsersync**
+3. Bootstrap 4 with Theming easily integrated (change predefined vars., themes & load only the scss files you need). Needs:
+
  
 ## Webgraphy
 
