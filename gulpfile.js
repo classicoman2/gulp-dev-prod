@@ -4,6 +4,7 @@
  * marcats amb // CHECK
  */
 
+//GULP
 const gulp = require("gulp");
 const browserify = require("browserify");
 const babelify = require("babelify");
@@ -16,6 +17,9 @@ const cssnano = require("cssnano");
 const imagemin = require("gulp-imagemin");
 const del = require("del");
 
+// AUTOPREFIXER
+const autoprefixer = require('autoprefixer')
+const sourcemaps = require('gulp-sourcemaps')
 
 // Source and build directories
 const paths = {
@@ -45,6 +49,27 @@ function javascriptBuildMain() {
   );
 }
 
+function javascriptBuildMain2() {
+  // CHECK - Posa aqui el nom del principal fitxer javascript
+  
+  let fileName = 'main-2.js'
+
+  return (
+    browserify({
+      entries: [`${paths.source}/js/${fileName}`],
+      transform: [babelify.configure({ presets: ["@babel/preset-env"] })],
+    })
+      .bundle()
+      .pipe(source(`js/${fileName}`))
+      // Turn it into a buffer!
+      .pipe(buffer())
+      // And uglify
+      .pipe(uglify())
+      .pipe(gulp.dest(`${paths.build}`))
+  );
+}
+
+
 
 // Write our html task in a saperate function
 function htmlBuild() {
@@ -55,12 +80,28 @@ function htmlBuild() {
     .pipe(gulp.dest(paths.build));
 }
 
+
+// AUTOPREFIXER per a afegir els vendor prefixes als estils CSS que ho requereixin
+function fix() {
+  // Neteja la carpeta dist
+  
+  return gulp.src('./*.css-original')
+    .pipe(sourcemaps.init())
+    .pipe(postcss([ autoprefixer() ]))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./css'))
+}
+
+
+
 // Processa el CSS
 function cssBuild() {
   return gulp  
   // CHECK - comprova la ruta dels fitxers CSS
     .src(`${paths.source}/**/css/*.css`)
     .pipe(postcss([cssnano()]))
+    .pipe(postcss([ autoprefixer() ]))  //nou
+    .pipe(sourcemaps.write('.'))  //nou
     .pipe(gulp.dest(`${paths.build}`));
 }
 
@@ -84,5 +125,6 @@ exports.build = gulp.series(
   cleanup,
   htmlBuild,
   imgSquash,
-  gulp.parallel(javascriptBuildMain, cssBuild, imgSquash)
+  gulp.parallel(javascriptBuildMain, cssBuild, imgSquash),
+  gulp.parallel(javascriptBuildMain2, cssBuild, imgSquash)
 );
