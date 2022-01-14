@@ -85,7 +85,7 @@ function htmlBuild() {
 function fix() {
   // Neteja la carpeta dist
   
-  return gulp.src('./*.css-original')
+  return gulp.src('./*.css')
     .pipe(sourcemaps.init())
     .pipe(postcss([ autoprefixer() ]))
     .pipe(sourcemaps.write('.'))
@@ -122,9 +122,9 @@ function cleanup() {
 
 
 exports.build = gulp.series(
+  fix,
   cleanup,
   htmlBuild,
   imgSquash,
   gulp.parallel(javascriptBuildMain, cssBuild, imgSquash),
-  gulp.parallel(javascriptBuildMain2, cssBuild, imgSquash)
 );
